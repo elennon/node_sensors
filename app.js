@@ -8,6 +8,10 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var bmp180 = require('./routes/bmp180');
+var sht15 = require('./routes/sht15');
+var sdp610 = require('./routes/sdp610');
+var mlx906 = require('./routes/mlx906');
+var cavityTemp = require('./routes/cavityTemp');
 
 var app = express();
 
@@ -26,6 +30,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/api/bmp180', bmp180);
+app.use('/api/sht15', sht15);
+app.use('/api/sdp610', sdp610);
+app.use('/api/mlx906', mlx906);
+app.use('/api/cavityTemp', cavityTemp);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
