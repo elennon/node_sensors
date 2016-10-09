@@ -15,16 +15,15 @@ router.get('/', function(req, res) {
 router.post('/', function(req, res){
     var collection = db.get('Bmp180');
     collection.insert({
-        title: req.body.title,
-        ok:req.body.ok,
-	message:req.body.message,
-	sensor: req.body.sensor,
-	ip: req.body.ip,
-	createdAt: req.body.createdAt,
-	id: req.body.id,
-	pressure: req.body.pressure,
-	altitude: req.body.altitude,
-	temp: req.body.temp
+        ok:req.body.Ok,
+	message:req.body.Message,
+	sensor: req.body.Sensor,
+	ip: req.body.Ip,
+	createdAt: req.body.CreatedAt,
+	id: req.body.Id,
+	pressure: req.body.Pressure,
+	altitude: req.body.Altitude,
+	temp: req.body.Temp
     }, function(err, bmp180){
         if (err) throw err;
 

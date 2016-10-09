@@ -15,14 +15,13 @@ router.get('/', function(req, res) {
 router.post('/', function(req, res){
     var collection = db.get('Sdp610');
     collection.insert({
-        title: req.body.title,
-        ok:req.body.ok,
-	message:req.body.message,
-	sensor: req.body.sensor,
-	ip: req.body.ip,
-	createdAt: req.body.createdAt,
-	id: req.body.id,
-	val: req.body.val
+        ok: req.body.Ok,
+	message: req.body.Message,
+	sensor: req.body.Sensor,
+	ip: req.body.Ip,
+	createdAt: req.body.CreatedAt,
+	id: req.body.Id,
+	val: req.body.Val
     }, function(err, sdp610){
         if (err) throw err;
 
