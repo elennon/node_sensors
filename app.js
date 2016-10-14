@@ -12,6 +12,7 @@ var sht15 = require('./routes/sht15');
 var sdp610 = require('./routes/sdp610');
 var mlx906 = require('./routes/mlx906');
 var cavityTemp = require('./routes/cavityTemp');
+var hflux = require('./routes/hflux');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use('/api/sht15', sht15);
 app.use('/api/sdp610', sdp610);
 app.use('/api/mlx906', mlx906);
 app.use('/api/cavityTemp', cavityTemp);
+app.use('/api/hflux', hflux);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
