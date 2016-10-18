@@ -1,5 +1,61 @@
-extends layout
+html
+	head
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		script(type='text/javascript', src="http://code.jquery.com/jquery-1.9.1.min.js")
+		script(type='text/javascript', src="http://code.highcharts.com/highcharts.js")
+		script(type='text/javascript', src="http://code.highcharts.com/modules/exporting.js")
+		title Delivered Leads      
+	body
+		div#container(style="width: 800px; height: 500px; margin: 0 auto")
+		script.
+			var arrToMultiArr = function(arr){
+				var result = new Array()
+				for (var i=0; i < arr.length; i+=2){
+				 	var date = arr[i]
+				  	//var count = arr[i + 1]
+				  	result.push(date)
+				}
+				return result
+			};
+			//var data = arrToMultiArr([#{results}])
+			var data = [#{results}]
 
-block content
-  h1= title
-  p Welcome to #{title}
+			$(function () {
+				$('#container').highcharts({
+					title: {
+						text: 'Monthly Average Temperature',
+						x: -20 //center
+					},
+					subtitle: {
+						text: 'Source: WorldClimate.com',
+						x: -20
+					},
+					xAxis: {
+						categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+							'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+					},
+					yAxis: {
+						title: {
+							text: 'Temperature (°C)'
+						},
+						plotLines: [{
+							value: 0,
+							width: 1,
+							color: '#808080'
+						}]
+					},
+					tooltip: {
+						valueSuffix: '°C'
+					},
+					legend: {
+						layout: 'vertical',
+						align: 'right',
+						verticalAlign: 'middle',
+						borderWidth: 0
+					},
+					series: [{
+						name: 'Tokyo',
+						data: data
+					}]
+				});
+			});
