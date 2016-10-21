@@ -37,6 +37,11 @@ app.use('/api/mlx906', mlx906);
 app.use('/api/cavityTemp', cavityTemp);
 app.use('/api/hflux', hflux);
 
+app.post('/', function(req, res) {
+
+  res.end();
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -45,8 +50,6 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
-
-
 
 // development error handler
 // will print stacktrace
@@ -70,5 +73,10 @@ app.use(function(err, req, res, next) {
   });
 });
 
+app.post("/download",function(req,res){
+	var name=req.body.file;
+		var d="C:\\Users\\S.Shivasurya\\Documents\\node\\expressapp\\tmp\\";
+		res.download(d+name);
+})
 
 module.exports = app;
