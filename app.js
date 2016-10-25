@@ -7,12 +7,14 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var readings = require('./routes/readings');
 var bmp180 = require('./routes/bmp180');
 var sht15 = require('./routes/sht15');
 var sdp610 = require('./routes/sdp610');
 var mlx906 = require('./routes/mlx906');
 var cavityTemp = require('./routes/cavityTemp');
 var hflux = require('./routes/hflux');
+var sensor = require('./routes/sensor');
 
 var app = express();
 
@@ -35,7 +37,14 @@ app.use('/api/sht15', sht15);
 app.use('/api/sdp610', sdp610);
 app.use('/api/mlx906', mlx906);
 app.use('/api/cavityTemp', cavityTemp);
+app.use('/api/sensor', sensor);
 app.use('/api/hflux', hflux);
+
+
+app.use('/reading', readings);
+app.use('/download', readings);
+app.use('/downloads', routes);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -70,5 +79,8 @@ app.use(function(err, req, res, next) {
   });
 });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> fbdfcc7... added sensor id
 module.exports = app;
