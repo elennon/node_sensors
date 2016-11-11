@@ -6,8 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
-var readings = require('./routes/readings');
 var bmp180 = require('./routes/bmp180');
 var sht15 = require('./routes/sht15');
 var sdp610 = require('./routes/sdp610');
@@ -31,7 +29,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
 app.use('/api/bmp180', bmp180);
 app.use('/api/sht15', sht15);
 app.use('/api/sdp610', sdp610);
@@ -39,9 +36,6 @@ app.use('/api/mlx906', mlx906);
 app.use('/api/cavityTemp', cavityTemp);
 app.use('/api/sensor', sensor);
 app.use('/api/hflux', hflux);
-app.use('/reading', readings);
-app.use('/download', readings);
-app.use('/downloads', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
