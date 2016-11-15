@@ -12,15 +12,16 @@ router.get('/', function(req, res, next) {
     var afrr = [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8];
 
     MongoClient.connect(url, function (err, db) {
-        var str = db.collection('Hflux').find({}, {'value' : true}).toArray(function(err, results_from_mongo) {
+		
+        var str = db.collection('Hflux').find().limit(5).toArray(function(err, results_from_mongo) {
         	for ( index in results_from_mongo){
 				var doc = results_from_mongo[index];
-				
-				var temp = doc['value'];
-				
-				temps.push(temp);
+				var temp = doc['val'];
+				if(temp !== 'collstick'){
+					temps.push(temp);
+				}
 		    }
-	    	console.log(afrr);
+	    	console.log(temps);
         	res.render('index', {"results": afrr });
 		});  
     });  

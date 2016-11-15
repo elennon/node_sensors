@@ -1,6 +1,6 @@
 
 doctype html
-html
+html(ng-app="mApp")
   head
     title= title
     link(rel='stylesheet', type='text/css', href='bootstrap/css/bootstrap.css')
@@ -11,8 +11,10 @@ html
     script(type='text/javascript', src='bootstrap/js/bootstrap.min.js')
     script(type='text/javascript', src='bootstrap-datepicker-master/js/bootstrap-datepicker.js')
     script(type='text/javascript', src='bootstrap/bootselect/dist/js/bootstrap-select.js')
-    
+    script(type='text/javascript', src="javascript/highcharts.js")
     
   body
 
     block content
+    
+    
