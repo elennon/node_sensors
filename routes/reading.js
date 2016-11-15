@@ -1,7 +1,42 @@
 var express = require('express');
 var router = express.Router();
 var MongoClient = require('mongodb').MongoClient
-var url = 'mongodb://139.59.172.240:27017/Measurements';	
+var url = 'mongodb://localhost:27017/Measurements';	
+var http = require('http');
+var request = require('request');
+
+var options = {
+  host: 'http://139.59.172.240',
+  path: '/api/hflux'
+};
+
+router.get('/getCount', function(req, res) {
+    var request = require('request');
+    request('http://139.59.172.240/api/hflux', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body) // Show the HTML for the Google homepage.
+        }
+    })
+    //var ft = getHflux();
+    res.send(600);
+});
+
+function getHflux() {
+        return http.get({
+            host: 'http://139.59.172.240',
+            path: '/api/hflux'
+        }, function(response) {
+            // Continuously update stream with data
+            var body = '';
+            response.on('data', function(d) {
+                body += d;
+            });
+            response.on('end', function() {
+                // Data reception is done, do whatever with it!
+                return JSON.parse(body);                
+            });
+        });
+    }
 
 /* GET form. */
 router.get('/', function(req, res) {
@@ -21,21 +56,6 @@ router.get('/', function(req, res) {
             res.render('reading', {"results": afrr });
         });  
     });  
-});
-
-router.get('/getCount', function(req, res) {
-    var resu;
-    MongoClient.connect(url, function(err, db) {
-        if (err) throw err;
-        var collection = db.collection('Bmp180');
-        collection.find({}, function(err, cursor){
-            resu = cursor.toArray(function(err, items) {
-                 console.log(items.length);
-                 res.send(items.length);
-             });
-        });
-   });      
-   res.json(resu)
 });
 
 /* POST form. */
