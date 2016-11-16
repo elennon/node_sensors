@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var monk = require('monk');
-var db = monk('localhost:27017/Measurements');
+var MongoClient = require('mongodb').MongoClient
+var url = 'mongodb://localhost:27017/Measurements';	
 
 router.get('/count', function(req, res) {
     //let result;
@@ -17,18 +17,21 @@ router.get('/count', function(req, res) {
 router.get('/', function(req, res) {
     var request = require('request');
     var arr = [];
-    res.render('reading', {"results": arr });
-    // request('http://139.59.172.240/api/hflux', function (error, response, body) {
-    //     if (!error && response.statusCode == 200) {
-    //        // var parsed = JSON.parse(body);
-    //        consol.log(body);
-    //         var arr = [];
-    //         for(var x in body){
-    //             arr.push(body[x]);
-    //         }
-    //         res.render('reading', {"results": arr });
-    //     }
-    // }) 
+    MongoClient.connect(url, function (err, db) {	
+        var collection = db.collection('Hflux');
+        collection('Hflux').find().limit(1).toArray(function(err, results_from_mongo) {
+        	for ( index in results_from_mongo){
+				var doc = results_from_mongo[index];
+				var temp = doc['val'];
+				if(temp !== 'collstick'){
+					temps.push(temp);
+				}
+		    }
+            var doc = results_from_mongo[0];
+	    	console.log(temps);
+        	res.render('index', {"time": results_from_mongo[index] });
+		});  
+    });  
 });
 
 /* POST form. */

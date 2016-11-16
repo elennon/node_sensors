@@ -6,22 +6,26 @@ var url = 'mongodb://localhost:27017/Measurements';
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    var results_from_mongo = [];
-    var temps = [];
-    var afrr = [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8];
+    
+    MongoClient.connect(url, function (err, db) {
+		var collection = db.collection('Hflux');
+		var cursor = collection.find().limit(1).sort({ $natural : -1 });
 
-    MongoClient.connect(url, function (err, db) {	
-        var str = db.collection('Hflux').find().limit(5).toArray(function(err, results_from_mongo) {
-        	for ( index in results_from_mongo){
-				var doc = results_from_mongo[index];
-				var temp = doc['val'];
-				if(temp !== 'collstick'){
-					temps.push(temp);
-				}
-		    }
-	    	console.log(temps);
-        	res.render('index', {"results": afrr });
-		});  
+		cursor.toArray(function(err, results) {
+			if (err) throw err;
+			console.log('%j', results[0].createdAt);
+			db.close();
+			var a = new Date(results[0].createdAt * 1000);
+			var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+			var year = a.getFullYear();
+			var month = months[a.getMonth()];
+			var date = a.getDate();
+			var hour = a.getHours();
+			var min = a.getMinutes();
+			var sec = a.getSeconds();
+			var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+			res.render('index', {"time": time });
+		});	
     });  
 });
 
@@ -41,6 +45,7 @@ router.post("/download",function(req,res){
         }
     }) 
 });
+
 
 
 module.exports = router;
