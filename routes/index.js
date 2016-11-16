@@ -9,11 +9,10 @@ router.get('/', function(req, res, next) {
     MongoClient.connect(url, function(err, db) {
 		var collection = db.collection('Hflux');
 		var cursor     = collection.find().sort({ "createdAt" : -1 }).limit(1);
-
 		cursor.toArray(function(err, results) {
 			if (err) throw err;
 			console.log('%j', results);
-			db.close();
+			
 			var a = new Date(results[0].createdAt * 1000);
 			var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 			var year = a.getFullYear();
@@ -22,8 +21,9 @@ router.get('/', function(req, res, next) {
 			var hour = a.getHours();
 			var min = a.getMinutes();
 			var sec = a.getSeconds();
-			var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-			res.render('index', {"time": "time" });
+			var time = date + ' ' + month + ' ' + hour + ':' + min + ':' + sec ;
+			res.render('index', {"time": time });
+			db.close();
 		});
 	});
 });
