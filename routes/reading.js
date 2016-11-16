@@ -17,7 +17,7 @@ router.get('/count', function(req, res) {
 router.get('/time', function(req, res) {
     MongoClient.connect(url, function(err, db) {
 		var collection = db.collection('Hflux');
-		var cursor     = collection.find().sort({ "createdAt" : -1 }).limit(1);
+		var cursor = collection.find().sort({ "createdAt" : -1 }).limit(1);
 		cursor.toArray(function(err, results) {
 			if (err) throw err;
 			console.log('%j', results);
@@ -39,23 +39,7 @@ router.get('/time', function(req, res) {
 
 /* GET form. */
 router.get('/', function(req, res) {
-    var request = require('request');
-    var arr = [];
-    MongoClient.connect(url, function (err, db) {	
-        var collection = db.collection('Hflux');
-        collection('Hflux').find().limit(1).toArray(function(err, results_from_mongo) {
-        	for ( index in results_from_mongo){
-				var doc = results_from_mongo[index];
-				var temp = doc['val'];
-				if(temp !== 'collstick'){
-					temps.push(temp);
-				}
-		    }
-            var doc = results_from_mongo[0];
-	    	console.log(temps);
-        	res.render('index', {"time": results_from_mongo[index] });
-		});  
-    });  
+    res.render('reading');
 });
 
 /* POST form. */
