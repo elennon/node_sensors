@@ -4,13 +4,14 @@ var MongoClient = require('mongodb').MongoClient
 var url = 'mongodb://localhost:27017/Measurements';	
 
 router.get('/count', function(req, res) {
-    //let result;
-    var collection = db.get('Hflux');
-    collection.count({}, function(error, numOfDocs){
-        if(error) return callback(err);
-        db.close();
-        res.json(numOfDocs);    
-    }); 
+    MongoClient.connect(url, function (err, db) {	
+        var collection = db.collection('Hflux');
+        collection.count({}, function(error, numOfDocs){
+            if(error) return callback(err);
+            db.close();
+            res.json(numOfDocs);    
+        }); 
+    });
 });
 
 /* GET form. */

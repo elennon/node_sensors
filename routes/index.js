@@ -6,14 +6,13 @@ var url = 'mongodb://localhost:27017/Measurements';
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    
-    MongoClient.connect(url, function (err, db) {
+    MongoClient.connect(url, function(err, db) {
 		var collection = db.collection('Hflux');
-		var cursor = collection.find().limit(1).sort({ $natural : -1 });
+		var cursor     = collection.find().sort({ "createdAt" : -1 }).limit(1);
 
 		cursor.toArray(function(err, results) {
 			if (err) throw err;
-			console.log('%j', results[0].createdAt);
+			console.log('%j', results);
 			db.close();
 			var a = new Date(results[0].createdAt * 1000);
 			var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -24,10 +23,11 @@ router.get('/', function(req, res, next) {
 			var min = a.getMinutes();
 			var sec = a.getSeconds();
 			var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-			res.render('index', {"time": time });
-		});	
-    });  
+			res.render('index', {"time": "time" });
+		});
+	});
 });
+	
 
 router.post("/download",function(req,res){
 	var fromdate=req.body.Fromdate;
