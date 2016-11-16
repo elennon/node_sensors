@@ -2,10 +2,10 @@ extends layout
 
 block content
   div.top
-    h2 reading count
+    h2 
         div(ng-controller="ctrller")
-            input(ng-model="test")
-            {{people.length}}
+            p hflux count: {{count}}
+            
 
   script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js")
   script(src="controllers/readingController.js")

@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-// var path = require('path');
-// var mime = require('mime');
+var jsonfile = require('jsonfile')
 var MongoClient = require('mongodb').MongoClient
 var url = 'mongodb://localhost:27017/Measurements';	
 
@@ -11,8 +10,7 @@ router.get('/', function(req, res, next) {
     var temps = [];
     var afrr = [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8];
 
-    MongoClient.connect(url, function (err, db) {
-		
+    MongoClient.connect(url, function (err, db) {	
         var str = db.collection('Hflux').find().limit(5).toArray(function(err, results_from_mongo) {
         	for ( index in results_from_mongo){
 				var doc = results_from_mongo[index];
@@ -32,19 +30,17 @@ router.post("/download",function(req,res){
 	var todate = req.body.Todate
 	var Senor = req.body.Senor
 	var Format = req.body.Format 
-	
-	// var file = '~/tester.txt;
-
-	// var filename = path.basename(file);
-	// var mimetype = mime.lookup(file);
-
-	// res.setHeader('Content-disposition', 'attachment; filename=' + filename);
-	// res.setHeader('Content-type', mimetype);
-
-	// var filestream = fs.createReadStream(file);
-	// filestream.pipe(res);
-	res.download("tester.txt");
-})
+	var request = require('request');
+    request('http://139.59.172.240/api/hflux', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+			var noqs = body.replace(/\"/g, "")
+			jsonfile.writeFile("tester.json", noqs, function (err) {
+				console.error(err);
+				res.download("tester.json");
+			})			
+        }
+    }) 
+});
 
 
 module.exports = router;
