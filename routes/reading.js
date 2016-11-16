@@ -14,6 +14,29 @@ router.get('/count', function(req, res) {
     });
 });
 
+router.get('/time', function(req, res) {
+    MongoClient.connect(url, function(err, db) {
+		var collection = db.collection('Hflux');
+		var cursor     = collection.find().sort({ "createdAt" : -1 }).limit(1);
+		cursor.toArray(function(err, results) {
+			if (err) throw err;
+			console.log('%j', results);
+			
+			var a = new Date(results[0].createdAt * 1000);
+			var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+			var year = a.getFullYear();
+			var month = months[a.getMonth()];
+			var date = a.getDate();
+			var hour = a.getHours();
+			var min = a.getMinutes();
+			var sec = a.getSeconds();
+			var time = date + ' ' + month + ' ' + hour + ':' + min + ':' + sec ;
+			res.json(time);
+			db.close();
+		});
+	});
+});
+
 /* GET form. */
 router.get('/', function(req, res) {
     var request = require('request');
