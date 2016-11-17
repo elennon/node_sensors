@@ -21,7 +21,6 @@ router.get('/time', function(req, res) {
 		cursor.toArray(function(err, results) {
 			if (err) throw err;
 			console.log('%j', results);
-			
 			var a = new Date(results[0].createdAt);
 			var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 			var year = a.getFullYear();
@@ -29,7 +28,11 @@ router.get('/time', function(req, res) {
 			var date = a.getDate();
 			var hour = a.getHours();
 			var min = a.getMinutes();
+            var dff = min.toString().length;
+            if(min.toString().length < 2) {min = '0' + min}
 			var sec = a.getSeconds();
+            if(sec.toString().length < 2) {sec = '0' + sec}
+
 			var time = date + ' ' + month + ' ' + hour + ':' + min + ':' + sec ;
 			res.json(time);
 			db.close();
