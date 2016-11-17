@@ -27,7 +27,7 @@ router.get('/time', function(req, res) {
 			var month = months[a.getMonth()];
 			var date = a.getDate();
 			var hour = a.getHours();
-            if(hour.toString().length < 2) {hour = '0' + min}
+            if(hour.toString().length < 2) {hour = '0' + hour}
 			var min = a.getMinutes();
             if(min.toString().length < 2) {min = '0' + min}
 			var sec = a.getSeconds();
