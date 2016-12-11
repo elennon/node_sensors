@@ -15,6 +15,7 @@ var mlx906 = require('./routes/mlx906');
 var cavityTemp = require('./routes/cavityTemp');
 var hflux = require('./routes/hflux');
 var sensor = require('./routes/sensor');
+var weatherStation = require('./routes/weatherStation');
 
 var app = express();
 
@@ -39,6 +40,7 @@ app.use('/api/mlx906', mlx906);
 app.use('/api/cavityTemp', cavityTemp);
 app.use('/api/sensor', sensor);
 app.use('/api/hflux', hflux);
+app.use('/api/weatherStation', weatherStation);
 
 
 app.use('/reading', readings);
@@ -79,8 +81,4 @@ app.use(function(err, req, res, next) {
   });
 });
 
-<<<<<<< HEAD
-
-=======
->>>>>>> fbdfcc7... added sensor id
 module.exports = app;
