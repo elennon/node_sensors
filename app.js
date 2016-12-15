@@ -16,6 +16,7 @@ var cavityTemp = require('./routes/cavityTemp');
 var hflux = require('./routes/hflux');
 var sensor = require('./routes/sensor');
 var weatherStation = require('./routes/weatherStation');
+var pi = require('./routes/pi');
 
 var app = express();
 
@@ -40,7 +41,7 @@ app.use('/api/cavityTemp', cavityTemp);
 app.use('/api/sensor', sensor);
 app.use('/api/hflux', hflux);
 app.use('/api/weatherStation', weatherStation);
-
+app.use('/api/pi', pi);
 
 app.use('/reading', readings);
 app.use('/download', readings);
