@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 
 var readings = require('./routes/reading');
-var regGroup = require('./routes/regGroup');
+//var regGroup = require('./routes/regGroup');
 var bmp180 = require('./routes/bmp180');
 var sht15 = require('./routes/sht15');
 var sdp610 = require('./routes/sdp610');
@@ -45,7 +45,7 @@ app.use('/api/pi', pi);
 app.use('/api/building', building);
 
 app.use('/reading', readings);
-app.use('/regGroup', regGroup);
+//app.use('/regGroup', regGroup);
 app.use('/download', readings);
 app.use('/downloads', routes);
 
