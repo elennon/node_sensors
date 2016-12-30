@@ -8,15 +8,16 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 
 var readings = require('./routes/reading');
+var regGroup = require('./routes/regGroup');
 var bmp180 = require('./routes/bmp180');
 var sht15 = require('./routes/sht15');
 var sdp610 = require('./routes/sdp610');
 var mlx906 = require('./routes/mlx906');
 var cavityTemp = require('./routes/cavityTemp');
 var hflux = require('./routes/hflux');
-var sensor = require('./routes/sensor');
 var weatherStation = require('./routes/weatherStation');
 var pi = require('./routes/pi');
+var building = require('./routes/building');
 
 var app = express();
 
@@ -38,12 +39,13 @@ app.use('/api/sht15', sht15);
 app.use('/api/sdp610', sdp610);
 app.use('/api/mlx906', mlx906);
 app.use('/api/cavityTemp', cavityTemp);
-app.use('/api/sensor', sensor);
 app.use('/api/hflux', hflux);
 app.use('/api/weatherStation', weatherStation);
 app.use('/api/pi', pi);
+app.use('/api/building', building);
 
 app.use('/reading', readings);
+app.use('/regGroup', regGroup);
 app.use('/download', readings);
 app.use('/downloads', routes);
 
@@ -56,8 +58,6 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
-
-
 
 // development error handler
 // will print stacktrace
